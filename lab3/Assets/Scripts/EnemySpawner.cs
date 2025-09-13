@@ -5,8 +5,9 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyPrefab; //drag enemy prefab in inspector
     public Transform player;       //reference to the Player
     public int enemyCount = 5;     //number of enemies to spawn
-    public float spawnRadius = 1f; //distance from player where enemies appear
-
+    //public float spawnRadius = 4f; //distance from player where enemies appear
+    public float minSpawnRadius = 3f; // closest enemies can spawn
+    public float maxSpawnRadius = 7f; // farthest enemies can spawn
     void Start()
     {
         SpawnEnemies();
@@ -16,14 +17,18 @@ public class EnemySpawner : MonoBehaviour
     {
         for (int i = 0; i < enemyCount; i++)
         {
-            //Pick an angle around the player
-            float angle = Random.Range(0f, Mathf.PI * 2f);
-            Vector2 spawnPos = (Vector2)player.position + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * spawnRadius;
+            //randomize location of spawns
+            float radius = Random.Range(minSpawnRadius, maxSpawnRadius);
 
-            //Create enemy
+            // Evenly space enemies around a circle
+            float angle = i * Mathf.PI * 2f / enemyCount; // divide full circle by number of enemies
+            Vector2 spawnPos = (Vector2)player.position + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
+
+
+            // Create enemy
             GameObject newEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
 
-            //Assign the player reference
+            // Assign the player reference
             EnemyBehavior eb = newEnemy.GetComponent<EnemyBehavior>();
             if (eb != null)
             {
