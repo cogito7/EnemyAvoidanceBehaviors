@@ -9,7 +9,7 @@ public class EnemyBehavior : MonoBehaviour
     public float minSpeed = 2f;          // Minimum speed
     public float maxSpeed = 10f;          //Maximum speed
     public float speedFactor = 5f;       //Speed factor based on distance from player
-    public float avoidanceStrength = 1f; // Strength enemies push away
+    public float avoidanceStrength = 1.5f; // Strength enemies push away
     public float avoidanceRadius = 3f;     // How close to get before repelling
     private Rigidbody2D rb;
 
@@ -17,7 +17,6 @@ public class EnemyBehavior : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         orbitDistance += Random.Range(0f, 3f);
-        //orbitSpeed /= orbitDistance;
     }
 
     void FixedUpdate()
@@ -34,12 +33,12 @@ public class EnemyBehavior : MonoBehaviour
 
         //Enemies close rotate faster & enemies further rotate slower
         //float scaledSpeed = Mathf.Clamp(orbitSpeed + (1f / (distance + 0.1f)) * speedFactor, minSpeed, maxSpeed);
-        float scaledOrbitSpeed;
+        float scaledOrbitSpeed = orbitSpeed;
 
         if (distance < 2f)         // very close
             scaledOrbitSpeed = maxSpeed;
         else if (distance < 5f)    // medium range
-            scaledOrbitSpeed = orbitSpeed;
+            scaledOrbitSpeed = orbitSpeed + (10f / (distance + 0.1f));
         else                       // far away
             scaledOrbitSpeed = minSpeed;
 
@@ -48,7 +47,7 @@ public class EnemyBehavior : MonoBehaviour
 
         // Move perpendicular to player (orbit around)
         Vector2 orbitDirection = new Vector2(-directionToPlayer.y, directionToPlayer.x).normalized;
-        Vector2 moveVector = orbitDirection * orbitSpeed;
+        Vector2 moveVector = orbitDirection * scaledOrbitSpeed;
 
         // Apply movement toward the target orbit radius
         Vector2 correction = (targetPosition - (Vector2)transform.position);

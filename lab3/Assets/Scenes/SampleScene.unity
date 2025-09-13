@@ -552,7 +552,8 @@ MonoBehaviour:
   enemyPrefab: {fileID: 560456288}
   player: {fileID: 1249479511}
   enemyCount: 10
-  spawnRadius: 7
+  minSpawnRadius: 3
+  maxSpawnRadius: 7
 --- !u!4 &1512352674
 Transform:
   m_ObjectHideFlags: 0
@@ -617,8 +618,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 861335132092514918, guid: 7ea4218071b76bd498b5667a356a8670, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 861335132092514918, guid: 7ea4218071b76bd498b5667a356a8670, type: 3}
       propertyPath: m_Offset.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 861335132092514918, guid: 7ea4218071b76bd498b5667a356a8670, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4996417013135903045, guid: 7ea4218071b76bd498b5667a356a8670, type: 3}
       propertyPath: m_Name
